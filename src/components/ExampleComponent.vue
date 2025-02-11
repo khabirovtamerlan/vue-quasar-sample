@@ -1,37 +1,26 @@
 <template>
-  <div>
-    <p>{{ title }}</p>
-    <ul>
-      <li v-for="todo in todos" :key="todo.id" @click="increment">
-        {{ todo.id }} - {{ todo.content }}
-      </li>
-    </ul>
-    <p>Count: {{ todoCount }} / {{ meta.totalCount }}</p>
-    <p>Active: {{ active ? 'yes' : 'no' }}</p>
-    <p>Clicks on todos: {{ clickCount }}</p>
+  <div class="q-pa-md width-100">
+    <q-card class="q-pa-md q-mb-md">
+      Store info: <br>
+      Name: {{ store.name }} <br>
+      Nationality: {{ store.nationality }} <br>
+      Typescript person: {{ person.name }} {{ person.nationality }}
+    </q-card>
+    <div class="flex-container">
+      <show-nationality />
+      <cat-fact />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import type { Todo, Meta } from './models';
+import { ShowNationality, CatFact, useNationalityStore } from 'vue-khabirov-tamerlan-quasar-lib';
+import type { Person } from 'vue-khabirov-tamerlan-quasar-lib';
 
-interface Props {
-  title: string;
-  todos?: Todo[];
-  meta: Meta;
-  active: boolean;
-};
+const store = useNationalityStore();
 
-const props = withDefaults(defineProps<Props>(), {
-  todos: () => []
-});
-
-const clickCount = ref(0);
-function increment() {
-  clickCount.value += 1;
-  return clickCount.value;
+const person: Person = {
+  name: 'Typescript interface sample',
+  nationality: 'works'
 }
-
-const todoCount = computed(() => props.todos.length);
 </script>
